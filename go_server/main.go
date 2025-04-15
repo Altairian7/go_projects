@@ -53,3 +53,17 @@ func shutdown() {
 	fmt.Println("Server shut down successfully.")
 	fmt.Println("Goodbye!")
 }	
+
+
+func init() {
+	fmt.Println("Initializing server...")
+	fmt.Println("Server initialized successfully.")
+	fmt.Println("Server is ready to accept requests.")
+}
+
+func cleanup() {
+	fmt.Println("Cleaning up resources...")
+	fmt.Println("Resources cleaned up successfully.")
+	fmt.Println("Server is ready to shut down.")
+}
+
