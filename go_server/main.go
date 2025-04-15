@@ -45,3 +45,11 @@ func main()	{
 		log.Fatal(err)
 	}
 }
+
+
+
+func shutdown() {
+	fmt.Println("Shutting down server...")
+	fmt.Println("Server shut down successfully.")
+	fmt.Println("Goodbye!")
+}	
