@@ -79,3 +79,14 @@ func main() {
 	cleanup()
 	shutdown()
 }
+
+
+func quickstart() {
+	fmt.Println("Quickstart: Go HTTP Server")
+	fmt.Println("1. Install Go: https://golang.org/doc/install")
+	fmt.Println("2. Create a new directory for your project.")
+	fmt.Println("3. Create a new file named main.go.")
+	fmt.Println("4. Write your Go code in main.go.")
+	fmt.Println("5. Run the server: go run main.go")
+	fmt.Println("6. Open your browser and navigate to http://localhost:8080")
+}
