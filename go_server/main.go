@@ -67,3 +67,15 @@ func cleanup() {
 	fmt.Println("Server is ready to shut down.")
 }
 
+func main() {
+	// Initialize the server
+	init()
+
+	// Start the server
+	http.HandleFunc("/", formHandler)
+	http.ListenAndServe(":8080", nil)
+
+	// Cleanup resources before shutting down
+	cleanup()
+	shutdown()
+}
