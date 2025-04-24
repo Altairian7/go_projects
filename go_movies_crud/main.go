@@ -26,6 +26,18 @@ type Director struct {
 
 var Movies []Movie
 
+
+func getMovies(w http.ResponseWriter, r *http.Request) {
+	w.Header().set("Content-Type". "application/json")
+	json.NewEncoder(w).Encode(Movies)
+}
+
+
+
+
+
+
+
 func main() {
 	// Init Router
 	r := mux.NewRouter()
@@ -42,3 +54,5 @@ func main() {
 
 	log.Fatal(http.ListenAndServe(":8000", r))
 }
+
+
