@@ -23,3 +23,22 @@ type Director struct {
 	LastName  string `json:"lastname"`
 }
 
+
+var Movies []Movie
+
+func main() {
+	// Init Router
+	r := mux.NewRouter()
+
+	// Mock Data
+	Movies = append(Movies, Movie{ID: "1", Isbn: "438-1234567890", Title: "Movie One", Director: &Director{FirstName: "John", LastName: "Doe"}})
+	Movies = append(Movies, Movie{ID: "2", Isbn: "438-1234567891", Title: "Movie Two", Director: &Director{FirstName: "Jane", LastName: "Smith"}})
+
+	// Route Handlers / Endpoints
+	r.HandleFunc("/movies", GetMovies).Methods("GET")
+	r.HandleFunc("/movies/{id}", GetMovie).Methods("GET")
+	r.HandleFunc("/movies", CreateMovie).Methods("POST")
+	r.HandleFunc("/movies/{id}", DeleteMovie).Methods("DELETE")
+
+	log.Fatal(http.ListenAndServe(":8000", r))
+}
