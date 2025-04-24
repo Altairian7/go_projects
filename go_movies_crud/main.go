@@ -15,6 +15,9 @@ type Movie struct {
 	Isbn    string  `json:"isbn"`
 	Title  string  `json:"title"`
 	Director string  `json:"director"`
+	Year   string  `json:"year"`
+	Rating string  `json:"rating"`
+	Genre  string  `json:"genre"`
 
 }
 
@@ -84,6 +87,9 @@ func main() {
 	// Mock Data
 	Movies = append(Movies, Movie{ID: "1", Isbn: "438-1234567890", Title: "Movie One", Director: &Director{FirstName: "John", LastName: "Doe"}})
 	Movies = append(Movies, Movie{ID: "2", Isbn: "438-1234567891", Title: "Movie Two", Director: &Director{FirstName: "Jane", LastName: "Smith"}})
+	Movies = append(Movies, Movie{ID: "3", Isbn: "438-1234567892", Title: "Movie Three", Director: &Director{FirstName: "Jim", LastName: "Brown"}})
+
+
 
 	// Route Handlers / Endpoints
 	r.HandleFunc("/movies", GetMovies).Methods("GET")
