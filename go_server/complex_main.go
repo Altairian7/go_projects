@@ -58,3 +58,18 @@ func uploadHandler(w http.ResponseWriter, r *http.Request) {
 	io.Copy(dst, file)
 	fmt.Fprintf(w, "File uploaded successfully: %s\n", header.Filename)
 }
+
+
+// cockie handler
+func cookieHandler(w http.ResponseWriter, r *http.Request) {
+	cookie, err := r.Cookie("visit")
+	if err == nil {
+		fmt.Fprintf(w, "Welcome back! Last visit: %s\n", cookie.Value)
+	} else {
+		fmt.Fprintln(w, "First time here!")
+	}
+	http.SetCookie(w, &http.Cookie{
+		Name:  "visit",
+		Value: "now",
+	})
+}
