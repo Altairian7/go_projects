@@ -21,3 +21,14 @@ func userJSONHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(user)
 }
+
+// path variable
+func userHandler(w http.ResponseWriter, r *http.Request) {
+	pathParts := strings.Split(r.URL.Path, "/")
+	if len(pathParts) < 3 || pathParts[2] == "" {
+		http.Error(w, "User ID not provided", http.StatusBadRequest)
+		return
+	}
+	userID := pathParts[2]
+	fmt.Fprintf(w, "User ID is: %s", userID)
+}
