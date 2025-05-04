@@ -119,3 +119,24 @@ func authHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	fmt.Fprintf(w, "Welcome, %s!\n", user)
 }
+
+
+func main() {
+	fmt.Println("Starting server on :8080...")
+
+	fileServer := http.FileServer(http.Dir("./static"))
+	http.Handle("/", fileServer)
+	http.HandleFunc("/jsonuser", userJSONHandler)
+	http.HandleFunc("/user/", userHandler)
+	http.HandleFunc("/upload", uploadHandler)
+	http.HandleFunc("/cookie", cookieHandler)
+	http.HandleFunc("/session", sessionHandler)
+	http.HandleFunc("/redirect", redirectHandler)
+	http.HandleFunc("/search", searchHandler)
+	http.HandleFunc("/auth", authHandler)
+
+
+	if err := http.ListenAndServe(":8080", nil); err != nil {
+		log.Fatal(err)
+	}
+}
