@@ -109,3 +109,13 @@ func searchHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	fmt.Fprintf(w, "You searched for: %s\n", query)
 }
+
+func authHandler(w http.ResponseWriter, r *http.Request) {
+	user, pass, ok := r.BasicAuth()
+	if !ok || user != "admin" || pass != "1234" {
+		w.Header().Set("WWW-Authenticate", `Basic realm="Restricted"`)
+		http.Error(w, "Unauthorized.", http.StatusUnauthorized)
+		return
+	}
+	fmt.Fprintf(w, "Welcome, %s!\n", user)
+}
