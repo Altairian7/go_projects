@@ -34,19 +34,6 @@ if r.Method != "GET" {
 }
 
 
-func main()	{
-	fileServer := http.FileServer(http.Dir("./static"))
-	http.Handle("/", fileServer)
-	http.HandleFunc("/form", formHandler)
-	http.HandleFunc("/hello", helloHandler)
-
-	fmt.Println("Starting server on :8080...\n")
-	if err := http.ListenAndServe(":8080", nil); err != nil {
-		log.Fatal(err)
-	}
-}
-
-
 
 func shutdown() {
 	fmt.Println("Shutting down server...")
@@ -67,6 +54,10 @@ func cleanup() {
 	fmt.Println("Server is ready to shut down.")
 }
 
+func timeHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Current server time: %v", r.Context().Value(http.ServerContextKey))
+}
+
 func main() {
 	// Initialize the server
 	init()
@@ -79,6 +70,21 @@ func main() {
 	cleanup()
 	shutdown()
 }
+
+
+
+func main()	{
+	fileServer := http.FileServer(http.Dir("./static"))
+	http.Handle("/", fileServer)
+	http.HandleFunc("/form", formHandler)
+	http.HandleFunc("/hello", helloHandler)
+
+	fmt.Println("Starting server on :8080...\n")
+	if err := http.ListenAndServe(":8080", nil); err != nil {
+		log.Fatal(err)
+	}
+}
+
 
 
 func quickstart() {
