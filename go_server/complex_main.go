@@ -32,3 +32,29 @@ func userHandler(w http.ResponseWriter, r *http.Request) {
 	userID := pathParts[2]
 	fmt.Fprintf(w, "User ID is: %s", userID)
 }
+
+
+// file to upload func
+
+func uploadHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "POST" {
+		http.ServeFile(w, r, "./static/upload.html") // assumes a form in HTML exists
+		return
+	}
+	file, header, err := r.FormFile("file")
+	if err != nil {
+		http.Error(w, "File upload error", http.StatusBadRequest)
+		return
+	}
+	defer file.Close()
+
+	dst, err := os.Create("./uploads/" + header.Filename)
+	if err != nil {
+		http.Error(w, "Unable to save file", http.StatusInternalServerError)
+		return
+	}
+	defer dst.Close()
+
+	io.Copy(dst, file)
+	fmt.Fprintf(w, "File uploaded successfully: %s\n", header.Filename)
+}
