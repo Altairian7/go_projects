@@ -58,6 +58,19 @@ func timeHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Current server time: %v", r.Context().Value(http.ServerContextKey))
 }
 
+
+func pingHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "PONG")
+}
+
+func headersHandler(w http.ResponseWriter, r *http.Request) {
+	for name, values := range r.Header {
+		for _, value := range values {
+			fmt.Fprintf(w, "%s: %s\n", name, value)
+		}
+	}
+}
+
 func main() {
 	// Initialize the server
 	init()
