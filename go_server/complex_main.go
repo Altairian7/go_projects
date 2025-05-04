@@ -73,3 +73,27 @@ func cookieHandler(w http.ResponseWriter, r *http.Request) {
 		Value: "now",
 	})
 }
+
+// Session (simulated via cookie)
+func sessionHandler(w http.ResponseWriter, r *http.Request) {
+	username := r.FormValue("username")
+	if username != "" {
+		http.SetCookie(w, &http.Cookie{
+			Name:  "session_user",
+			Value: username,
+		})
+		fmt.Fprintf(w, "Session started for %s\n", username)
+		return
+	}
+	cookie, err := r.Cookie("session_user")
+	if err != nil {
+		fmt.Fprintln(w, "No session found.")
+	} else {
+		fmt.Fprintf(w, "Session active for user: %s\n", cookie.Value)
+	}
+}
+
+// Redirect to another route
+func redirectHandler(w http.ResponseWriter, r *http.Request) {
+	http.Redirect(w, r, "/hello", http.StatusFound)
+}
