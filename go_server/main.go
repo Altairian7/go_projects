@@ -71,28 +71,24 @@ func headersHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func main() {
-	// Initialize the server
-	init()
-
-	// Start the server
-	http.HandleFunc("/", formHandler)
-	http.ListenAndServe(":8080", nil)
-
-	// Cleanup resources before shutting down
-	cleanup()
-	shutdown()
+func notFoundHandler(w http.ResponseWriter, r *http.Request) {
+	http.NotFound(w, r)
 }
 
+// MAIN
+func main() {
+	fmt.Println("Starting server on :8080...")
 
-
-func main()	{
 	fileServer := http.FileServer(http.Dir("./static"))
 	http.Handle("/", fileServer)
 	http.HandleFunc("/form", formHandler)
 	http.HandleFunc("/hello", helloHandler)
+	http.HandleFunc("/json", jsonHelloHandler)
+	http.HandleFunc("/time", timeHandler)
+	http.HandleFunc("/ping", pingHandler)
+	http.HandleFunc("/headers", headersHandler)
+	http.HandleFunc("/notfound", notFoundHandler)
 
-	fmt.Println("Starting server on :8080...\n")
 	if err := http.ListenAndServe(":8080", nil); err != nil {
 		log.Fatal(err)
 	}
