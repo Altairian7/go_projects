@@ -97,3 +97,15 @@ func sessionHandler(w http.ResponseWriter, r *http.Request) {
 func redirectHandler(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/hello", http.StatusFound)
 }
+
+
+
+// query parameters
+func searchHandler(w http.ResponseWriter, r *http.Request) {
+	query := r.URL.Query().Get("search")
+	if query == "" {
+		fmt.Fprintln(w, "No search query provided.")
+		return
+	}
+	fmt.Fprintf(w, "You searched for: %s\n", query)
+}
